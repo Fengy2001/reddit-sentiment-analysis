@@ -29,7 +29,19 @@ class reddit_driver:
     
     def _request_new_access_token(self):
         reddit_token_url = self.reddit_url+"access_token"
-        response = self.request(reddit_token_url)
+        authentication = requests.auth.HTTPBasicAuth(self.secret_id, self.secret_pwd)
+        account_data = {
+            "grant_type":"password",
+            "username": self.username,
+            "password": self.password
+        }
+        headers = {"User-Agent":f"Python-Reddit-app-{self.client_id}/v0.1 u/{self.username}"}
+        response = requests.post(
+            reddit_token_url,
+            auth=authentication,
+            data=account_data,
+            headers=headers
+        )
         if (response.status_code == 200):
             self.token = response.json().get("access_token")
             self.expiry = response.json().get("expires_in")
@@ -41,7 +53,7 @@ class reddit_driver:
 
     def get_token(self):
         try:
-            if self.token == None or time.time() > self.expiry:
+            if self.token == None or time.time()+100 > self.expiry:
                 self._request_new_access_token()
             else:
                 return self.token
@@ -52,18 +64,9 @@ class reddit_driver:
 
         return self.token
     
-    def request(self, url):
-        authentication = requests.auth.HTTPBasicAuth(self.secret_id, self.secret_pwd)
-        account_data = {
-            "grant_type":"password",
-            "username": self.username,
-            "password": self.password
-        }
-        headers = {"User-Agent":f"Python-Reddit-app-{self.client_id}/v0.1 u/{self.username}"}
-        response = requests.post(
-            url,
-            auth=authentication,
-            data=account_data,
-            headers=headers
-        )
-        return response
+    def get_header(self):
+        if self.token == None or time.time()+100 > self.expiry:
+            self._request_new_access_token()
+        header = {"User-Agent":f"Python-Reddit-app-{self.client_id}/v0.1 u/{self.username}",
+                  "Authorization":f"bearer {self.token}"}
+        return header
