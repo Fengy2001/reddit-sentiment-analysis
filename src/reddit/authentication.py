@@ -3,13 +3,15 @@ import json
 import time
 import requests
 
-class reddit_auth:
+class reddit_driver:
     def __init__(self, account, client_id):
         self.account = account
         self.client_id = client_id
         self.root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
         self.token = None
         self.reddit_url = "https://www.reddit.com/api/v1/"
+        self.username, self.password = self._get_account_deets()
+        self.secret_id, self.secret_pwd = self._get_secret()
 
     def _get_account_deets(self):
         with open(os.path.join(self.root, "src/no-commit/accounts.json"), "r") as file:
@@ -26,22 +28,8 @@ class reddit_auth:
         return secret_id, secret_pwd
     
     def _request_new_access_token(self):
-        username, password = self._get_account_deets()
-        secret_id, secret_pwd= self._get_secret()
         reddit_token_url = self.reddit_url+"access_token"
-        authentication = requests.auth.HTTPBasicAuth(secret_id, secret_pwd)
-        account_data = {
-            "grant_type":"password",
-            "username": username,
-            "password": password
-        }
-        headers = {"User-Agent":f"Python-Reddit-app-{self.client_id}/v0.1 u/{username}"}
-        response = requests.post(
-            reddit_token_url,
-            auth=authentication,
-            data=account_data,
-            headers=headers
-        )
+        response = self.request(reddit_token_url)
         if (response.status_code == 200):
             self.token = response.json().get("access_token")
             self.expiry = response.json().get("expires_in")
@@ -63,3 +51,19 @@ class reddit_auth:
             print("Error outside the scope of what's being handled occured.")
 
         return self.token
+    
+    def request(self, url):
+        authentication = requests.auth.HTTPBasicAuth(self.secret_id, self.secret_pwd)
+        account_data = {
+            "grant_type":"password",
+            "username": self.username,
+            "password": self.password
+        }
+        headers = {"User-Agent":f"Python-Reddit-app-{self.client_id}/v0.1 u/{self.username}"}
+        response = requests.post(
+            url,
+            auth=authentication,
+            data=account_data,
+            headers=headers
+        )
+        return response
