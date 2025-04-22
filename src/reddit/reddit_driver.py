@@ -7,21 +7,21 @@ class reddit_driver:
     def __init__(self, account, client_id):
         self.account = account
         self.client_id = client_id
-        self.root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        self.root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..\\.."))
         self.token = None
         self.reddit_url = "https://www.reddit.com/api/v1/"
         self.username, self.password = self._get_account_deets()
         self.secret_id, self.secret_pwd = self._get_secret()
 
     def _get_account_deets(self):
-        with open(os.path.join(self.root, "src/no-commit/accounts.json"), "r") as file:
+        with open(os.path.join(self.root, "src\\no-commit\\accounts.json"), "r") as file:
             json_data = json.load(file)
             username = json_data[self.account]["username"]
             password = json_data[self.account]["password"]
         return username, password
 
     def _get_secret(self):
-        with open(os.path.join(self.root, "src/no-commit/secrets.json"), "r") as file:
+        with open(os.path.join(self.root, "src\\no-commit\\secrets.json"), "r") as file:
             json_data = json.load(file)
             secret_id = json_data[self.client_id][0]
             secret_pwd = json_data[self.client_id][1]
