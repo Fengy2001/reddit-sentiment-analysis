@@ -12,6 +12,7 @@ dependencies = [
     "requests (>=2.32.3,<3.0.0)",
     "transformers (>=4.51.3,<5.0.0)",
     "accelerate (>=1.6.0,<2.0.0)",
+    "datasets (>=3.5.0,<4.0.0)",
 ]
 
 [tool.poetry]

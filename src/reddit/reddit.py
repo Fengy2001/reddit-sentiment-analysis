@@ -12,7 +12,7 @@ class reddit:
         self.posts = {}
 
     def get_new_posts(self):
-        subreddit_new_url = self.reddit_url+"/r/"+self.subreddit+"/new"
+        subreddit_new_url = self.reddit_url+"/r/"+self.subreddit+"/new?limit=100"
         response = requests.get(subreddit_new_url, headers=self.driver.get_header()).json()
         for post in response["data"]["children"]:
             if (post["data"]["title"] not in self.posts):
@@ -21,7 +21,7 @@ class reddit:
 
     def save_new_comments(self, thread_id):
         try:
-            subreddit_new_url = self.reddit_url+f"/comments/{thread_id}.json?sort=new"   
+            subreddit_new_url = self.reddit_url+f"/comments/{thread_id}.json?sort=new"
             response = requests.get(subreddit_new_url, headers=self.driver.get_header()).json()
             comments = []
             for comment in response[1]["data"]["children"]:
