@@ -9,6 +9,7 @@ class sentiment_analysis:
             self.device = "cuda"
         else:
             self.device = "cpu"
+        self.init_model()
     
     def init_model(self):
         self.model = transformers.pipeline(
