@@ -22,9 +22,9 @@ class sentiment_analysis:
     def analyze(self, comment):
         sentiment = self.model(comment)[0]["label"]
         if (sentiment == "negative"):
-            return 0
+            return -1
         elif (sentiment == "neutral"):
-            return 1
+            return 0
         elif (sentiment == "positive"):
-            return 2
-        return -1
+            return 1
+        return None
