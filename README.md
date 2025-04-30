@@ -7,3 +7,5 @@ Then add these libraries to the environment by doing:
     ```
     poetry add --source pytorch-gpu torch torchvision torchaudio
     ```
+TODO:
+Make the chunking for tokenizer sentiment analysis.
