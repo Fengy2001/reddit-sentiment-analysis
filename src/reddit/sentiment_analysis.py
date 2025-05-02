@@ -23,11 +23,13 @@ class sentiment_analysis:
         )
 
     def analyze(self, comment):
+        if (len(self.tokenizer.encode(comment)) > 512):
+            return "Comment needs to be chunked."
         sentiment = self.model(comment)[0]["label"]
-        if (sentiment == "negative"):
+        if (sentiment.lower() == "negative"):
             return -1
-        elif (sentiment == "neutral"):
+        elif (sentiment.lower() == "neutral"):
             return 0
-        elif (sentiment == "positive"):
+        elif (sentiment.lower() == "positive"):
             return 1
         return None
