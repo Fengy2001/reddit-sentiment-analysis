@@ -15,6 +15,12 @@ def get_posts_of_interest(subreddit):
     for post, post_id in posts_of_interest.items():
         subreddit.save_new_comments(post_id)
     
+def update():
+    pass
+
+def visualize():
+    pass
+
 def main():
     wsb = reddit("wallstreetbets","default_account","WSB-data-gathering")
     get_posts_of_interest(wsb)

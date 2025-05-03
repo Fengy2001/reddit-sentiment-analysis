@@ -8,4 +8,4 @@ Then add these libraries to the environment by doing:
     poetry add --source pytorch-gpu torch torchvision torchaudio
     ```
 TODO:
-Make the chunking for tokenizer sentiment analysis.
+Make the streamlit widget to display the analyzed sentiment of the sentence, then EDA on what the distribution is. If the distribution is bad, consider using a different LLM for more variability in the values.
