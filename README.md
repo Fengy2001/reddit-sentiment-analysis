@@ -7,5 +7,8 @@ Then add these libraries to the environment by doing:
     ```
     poetry add --source pytorch-gpu torch torchvision torchaudio
     ```
-TODO:
+
+# TODO:
 Make the streamlit widget to display the analyzed sentiment of the sentence, then EDA on what the distribution is. If the distribution is bad, consider using a different LLM for more variability in the values.
+
+    Issue 1: Streamlit and pytorch does not work well together for async related functions. May need to look into turning this purely into a backend and design/find another front end interactive data dashboard.
