@@ -19,12 +19,16 @@ def update(subreddit):
     get_posts_of_interest(subreddit)
 
 def visualize():
-    pass
+    sentiment_data = pd.read_csv(f"data/{time.strftime("%Y-%m-%d")}.csv")
+    st.write(sentiment_data)
+    counts = sentiment_data["sentiment"].value_counts().sort_index()
+    st.bar_chart(counts)
 
 def main():
     wsb = reddit("wallstreetbets","default_account","WSB-data-gathering")
     if (st.button("Update") or reddit_data.empty):
         update(wsb)
+        visualize()
 
 reddit_data = pd.DataFrame()
 main()
