@@ -14,3 +14,6 @@ Make the streamlit widget to display the analyzed sentiment of the sentence, the
     Issue 1: Streamlit and pytorch does not work well together for async related functions. May need to look into turning this purely into a backend and design/find another front end interactive data dashboard. _(Addendum) This issue is **low priority** since the main focus of the dashboard is just to visualize the data found. This will be revisited when the concept shows promise_
 
     Issue 2: Need to change reddit comment retrieval to start at the oldest comment id recieved. Otherwise wasted API calls grab the exact same 100~ comments over and over again. **Medium priority**.
+
+# Notes:
+May need to experiment with different sentiment analysis models, "yiyanghkust/finbert-tone" seems to be too strict with what it considers "positive" or "negative" sentiment, labelling most to neutral. The data then presented doesn't seem appealing to analyze.
