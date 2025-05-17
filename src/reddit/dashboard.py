@@ -23,6 +23,7 @@ def visualize():
     st.write(sentiment_data)
     counts = sentiment_data["sentiment"].value_counts().sort_index()
     st.bar_chart(counts)
+    # some light data processing? maybe a separate class
 
 def main():
     wsb = reddit("wallstreetbets","default_account","WSB-data-gathering")
